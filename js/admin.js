@@ -1,15 +1,18 @@
 //Explicación clase 14 diciembre
 
-import { validarInputRequerido, validarInputDescripcion, validarInputPrecio, validarInputImgUrl, validarTodo } from "./hellpers.js";
-let arrayProductos=JSON.parse(localStorage.getItem('productos')) || [];
+import { validarInputRequerido, validarInputDescripcion, validarInputPrecio, validarInputImgUrl, validarTodo, ObtenerCodigoAleatorio } from "./hellpers.js";
 
+let arrayProductos=JSON.parse(localStorage.getItem('productos')) || [];
+let bodyTabla=document.querySelector('tbody');
 let inputCodigo=document.getElementById('codigo');
 let inputNombre=document.getElementById('nombre');
 let inputDescripcion=document.getElementById('descripcion');
 let inputPrecio=document.getElementById('precio');
 let inputImgUrl=document.getElementById('imgUrl');
-
+console.log(bodyTabla);
 let form=document.querySelector('form');
+
+inputCodigo.value=ObtenerCodigoAleatorio(); //Con ésto lleno el campo con el código aleatorio, sin que el usuario pueda
 
 console.log(form);
 
@@ -34,6 +37,10 @@ inputPrecio.addEventListener('blur', ()=>{
 inputImgUrl.addEventListener('blur', ()=>{
     validarInputImgUrl(inputImgUrl);
 });
+
+//Llamamos a la funcion listar prodctos para crear filas en nuestra tabla
+ListarProductos();
+
 
 
 function GuardarProducto(e){ //e = event
@@ -67,11 +74,15 @@ function CrearProducto(){ //Con ésto creamos un nuevo objeto
       });
 
     LimpiarFormulario();
+    bodyTabla.innerHTML=''; //Para evitar que se repitan de nuevo los productos, cuando ingreso uno
+    ListarProductos();
 }
 
 function LimpiarFormulario(){ //Con ésto limpiamos el formulario
     form.reset(); //con reset reestablece el formulario
+    //Los input de abajo son para que cuando enviamos un formulario, se borren las tildes de validaciòn verdes
     inputCodigo.className='form-control';
+    inputCodigo.value=ObtenerCodigoAleatorio();
     inputNombre.className='form-control';
     inputDescripcion.className='form-control';
     inputPrecio.className='form-control';
@@ -81,4 +92,20 @@ function LimpiarFormulario(){ //Con ésto limpiamos el formulario
 
 function GuardarLocalStorage(){
     localStorage.setItem('productos', JSON.stringify(arrayProductos));
+}
+
+function ListarProductos(){
+    arrayProductos.forEach(element =>{ //ForEach: Por cada elemento
+        bodyTabla.innerHTML += ` <tr>
+        <th scope="row"> ${element.codigo} </th>
+        <td> ${element.nombre} </td>
+        <td> ${element.descripcion} </td>
+        <td> ${element.precio} </td>
+        <td><a href="${element.imgUrl}" target="_blank" title="Ver Imagen">${element.imgUrl}</a></td>
+        <td>
+            <button type="button" class="btn btn-warning mx-1">Editar</button>
+            <button type="button" class="btn btn-danger mx-1">Eliminar</button>
+        </td>
+    </tr>`
+    })
 }
