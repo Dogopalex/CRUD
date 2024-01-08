@@ -78,7 +78,8 @@ function CrearProducto(){ //Con ésto creamos un nuevo objeto
     ListarProductos();
 }
 
-function LimpiarFormulario(){ //Con ésto limpiamos el formulario
+//window: Creo una función global/anónima
+window.LimpiarFormulario = function(){ //Con ésto limpiamos el formulario.
     form.reset(); //con reset reestablece el formulario
     //Los input de abajo son para que cuando enviamos un formulario, se borren las tildes de validaciòn verdes
     inputCodigo.className='form-control';
