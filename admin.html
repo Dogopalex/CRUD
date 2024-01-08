@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- recordar las 3 etiquetas meeta -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <title>CRUD - Admin</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="./index.html">CRUD</a>
+              <!-- Botón hamburguesa -->
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="./index.html">Inicio</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="./admin.html">Administración</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+    </header>
+    <main class="container">
+        <section class="my-5">
+            <h1>Administrar Productos</h1>
+            <hr>
+        </section>
+        <section class="container">
+            <form>
+                <div class="my-3">
+                    <label for="codigo">Codigo</label>
+                    <input id="codigo" type="text" class="form-control" placeholder="Ingrese el código" minlength="4" maxlength="50" required>
+                </div>
+                <div class="my-3">
+                    <label for="nombre">Nombre</label>
+                    <input id="nombre" type="text" class="form-control" placeholder="Ingrese el nombre" minlength="3" maxlength="50" required>
+                </div>
+                <div class="my-3">
+                    <label for="descripcion">Descripcion</label>
+                    <textarea id="descripcion" type="text" class="form-control" placeholder="Ingrese la descripcion" minlength="10" maxlength="200" required></textarea>
+                </div>
+                <div class="my-3">
+                    <label for="precio">Precio</label>
+                    <input id="precio" type="text" class="form-control" placeholder="Ingrese el precio" minlength="1" maxlength="50" required>
+                </div>
+                <div class="my-3">
+                    <label for="imgUrl">URL Imagen</label>
+                    <input id="imgUrl" type="text" class="form-control" placeholder="Ingrese el código" minlength="4" maxlength="200" required>
+                </div>
+                <button type="submit" class="my-3 btn btn-primary">Guardar</button>
+            </form>
+        </section>
+        <hr>
+        <section class="container my-3">
+            <h2>Tabla de Productos</h2>
+            <hr>
+            <button type="button" class="btn btn-outline-primary">Nuevo</button>
+            <article class="mt-5">
+                <div class="tabla-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Codigo</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Descripcion</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col" width="350px">URL Imagen</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Prueba</td>
+                                <td>Prueba</td>
+                                <td>123112</td>
+                                <td>https://www.istockphoto.com/photo/businessman-touching-the-brain-working-of-artificial-intelligence-automation-gm1452604857-488908483?utm_source=pixabay&utm_medium=affiliate&utm_campaign=SRP_image_sponsored&utm_content=https%3A%2F%2Fpixabay.com%2Fes%2Fimages%2Fsearch%2Fimagen%2F&utm_term=imagen</td>
+                                <td>
+                                    <button type="button" class="btn btn-warning mx-1">Editar</button>
+                                    <button type="button" class="btn btn-danger mx-1">Eliminar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+        </section>
+    </main>
+    <footer>
+
+    </footer>
+
+    <script src="./js/bootstrap.min.js"></script>
+</body>
+</html>
