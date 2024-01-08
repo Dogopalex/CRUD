@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- recordar las 3 etiquetas meeta -->
     <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>CRUD - Admin</title>
 </head>
 <body>
@@ -50,13 +51,13 @@
                 </div>
                 <div class="my-3">
                     <label for="precio">Precio</label>
-                    <input id="precio" type="text" class="form-control" placeholder="Ingrese el precio" minlength="1" maxlength="50" required>
+                    <input id="precio" type="text" class="form-control" placeholder="Ingrese el precio. Por favor utilize ',' para los decimales" minlength="1" maxlength="50" required>
                 </div>
                 <div class="my-3">
                     <label for="imgUrl">URL Imagen</label>
                     <input id="imgUrl" type="text" class="form-control" placeholder="Ingrese el código" minlength="4" maxlength="200" required>
                 </div>
-                <button type="submit" class="my-3 btn btn-primary">Guardar</button>
+                <button class="my-3 btn btn-primary">Guardar</button>
             </form>
         </section>
         <hr>
@@ -100,5 +101,6 @@
     </footer>
 
     <script src="./js/bootstrap.min.js"></script>
+    <script type="module" src="./js/admin.js"></script>
 </body>
 </html>
