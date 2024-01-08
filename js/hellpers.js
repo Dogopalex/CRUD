@@ -50,3 +50,28 @@ export function validarTodo(inpCodigo, inpNombre, inpDescripcion, inpPrecio, inp
         return false;
     }
 }
+
+
+export function CodigoAleatorio(){
+    const regCode = JSON.parse(localStorage.getItem('regCode')) || [];
+    let repeat=false;
+    let code;
+    do{
+        code = parseInt((Math.random() * 10000)); //parseInt: Pasa a entero. El resto genera un nùmero aleatorio
+        for(let index=0 ; index<regCode.length ; index++){
+            if(code == regCode[index]){
+                repeat=true;
+                break;
+            } else{
+                repeat=false;
+            }
+        }
+    } while(repeat);
+    regCode.push(code);
+    localStorage.setItem('regCode', JSON.stringify(regCode)) //Actualizar localStorage. 'regCode' con què nombre guardamos. el resto dónde lo guardamos
+    return code;
+}
+
+export function ObtenerCodigoAleatorio(){
+    return window.crypto.randomUUID(); //Devuelve un código random sin repetir alfanumérico
+}
