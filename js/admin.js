@@ -41,12 +41,18 @@ inputImgUrl.addEventListener('blur', ()=>{
 //Llamamos a la funcion listar prodctos para crear filas en nuestra tabla
 ListarProductos();
 
-
+let esEdicion = false;
 
 function GuardarProducto(e){ //e = event
     e.preventDefault(); //Evita que se recargue la página cuando ponemos el botón de "enviar" (Funciona solo con la función de arriba 'form.addEve...')
     if(validarTodo(inputCodigo, inputNombre, inputDescripcion, inputPrecio, inputImgUrl)){
-        CrearProducto();
+        if(esEdicion){
+            //Llamar a la función para gurdar el producto editado
+            GuardarProductoEditado();
+        } else{
+            CrearProducto();    
+        }
+        
     } else{
         Swal.fire({ // Efecto al poner aceptar
             title: "Ups",
@@ -76,6 +82,45 @@ function CrearProducto(){ //Con ésto creamos un nuevo objeto
     LimpiarFormulario();
     bodyTabla.innerHTML=''; //Para evitar que se repitan de nuevo los productos, cuando ingreso uno
     ListarProductos();
+};
+
+function GuardarProductoEditado(){
+    let indexProducto = arrayProductos.findIndex((element)=> { //findIndex: Funciona igual que el Find, pero devuelve el índice
+        return element.codigo == inputCodigo.value;
+    });
+    // console.log(indexProducto);
+    if(indexProducto != -1){
+        Swal.fire({
+            title: "¿Estás seguro?",
+            text: "Vas a cambiar los datos de un producto",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Guardar cambios",
+            cancelButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                arrayProductos[indexProducto].codigo = inputCodigo.value;
+                arrayProductos[indexProducto].nombre = inputNombre.value;
+                arrayProductos[indexProducto].descripcion = inputDescripcion.value;
+                arrayProductos[indexProducto].precio = inputPrecio.value;
+                arrayProductos[indexProducto].imgUrl = inputImgUrl;        
+                esEdicion = false;
+                Swal.fire({ // Efecto al poner aceptar
+                    title: "Exito",
+                    text: "El proucto se actualizó exitosamente",
+                    icon: "success"
+                  });
+                
+                LimpiarFormulario();
+                ListarProductos();
+            } else{
+                esEdicion = false;
+                LimpiarFormulario();
+            }
+        });
+    }
 }
 
 //window: Creo una función global/anónima
@@ -96,17 +141,33 @@ function GuardarLocalStorage(){
 }
 
 function ListarProductos(){
-    arrayProductos.forEach(element =>{ //ForEach: Por cada elemento
+    arrayProductos.forEach((element)=> { //ForEach: Por cada elemento
         bodyTabla.innerHTML += ` <tr>
         <th scope="row"> ${element.codigo} </th>
         <td> ${element.nombre} </td>
         <td> ${element.descripcion} </td>
         <td> ${element.precio} </td>
         <td><a href="${element.imgUrl}" target="_blank" title="Ver Imagen">${element.imgUrl}</a></td>
-        <td>
-            <button type="button" class="btn btn-warning mx-1">Editar</button>
-            <button type="button" class="btn btn-danger mx-1">Eliminar</button>
+        <td class="">
+            <div class="d-flex">
+                <button type="button" class="btn btn-warning mx-1" onclick="PrepararEdicion( '${element.codigo}' )">Editar</button>
+                <button type="button" class="btn btn-danger mx-1">Eliminar</button>
+            </div>
         </td>
-    </tr>`
-    })
+    </tr>`;
+    });
+};
+
+window.PrepararEdicion = function(codigo){
+    const productoAEditar = arrayProductos.find((element)=> { //find: busca un elemento en el array, retorna un booleano
+        return element.codigo == codigo;
+    });
+    if(productoAEditar !== undefined){
+        inputCodigo.value = productoAEditar.codigo;
+        inputNombre.value = productoAEditar.nombre;
+        inputDescripcion.value = productoAEditar.descripcion;
+        inputPrecio.value = productoAEditar.precio;
+        inputImgUrl.value = productoAEditar.imgUrl;
+    };
+    esEdicion = true;
 }
